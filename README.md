@@ -43,11 +43,11 @@ docker compose up --build
 
 Sin Docker: SQL Server en `1433`, `dotnet run --project src/Invoice.Api` y `cd frontend && npm install && npm run dev`.
 
-## Railway
+## Demo (Railway)
 
-SQL + API + dashboard. Variables y orden: [railway/README.md](railway/README.md).
+| Qué | URL |
+|-----|-----|
+| Dashboard | https://web-production-340e5d.up.railway.app |
+| Swagger | https://api-production-563e.up.railway.app/swagger |
 
-| Qué | Dónde |
-|-----|--------|
-| Swagger | dominio del servicio `api` + `/swagger` |
-| Dashboard | dominio del servicio `web` |
+Variables y orden de deploy: [railway/README.md](railway/README.md).
