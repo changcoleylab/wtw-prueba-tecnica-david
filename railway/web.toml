@@ -1,0 +1,20 @@
+# Railway — servicio frontend
+# Root Directory = /
+# Config-as-code = railway/web.toml
+# VITE_API_URL debe existir en build (URL pública del api).
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.web"
+watchPatterns = [
+  "Dockerfile.web",
+  "frontend/**",
+  "docker/web-entrypoint.sh",
+  "railway/web.toml",
+]
+
+[deploy]
+healthcheckPath = "/"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5

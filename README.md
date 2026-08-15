@@ -24,7 +24,7 @@ Otras partes del enunciado:
 
 ## Local
 
-Requisitos: Docker Desktop, .NET 8 SDK.
+Requisitos: Docker Desktop, .NET 8 SDK, Node 22.
 
 ```bash
 cp .env.example .env
@@ -33,6 +33,7 @@ docker compose up --build
 
 | Qué | URL |
 |-----|-----|
+| Dashboard | http://localhost:5173 |
 | API + Swagger | http://localhost:8080/swagger |
 | Health | http://localhost:8080/health |
 
@@ -40,10 +41,13 @@ docker compose up --build
 |---------|------------|
 | `analyst@invoicehub.local` | `InvoiceHub!2026` |
 
-Sin Docker: SQL Server en `1433` y `dotnet run --project src/Invoice.Api`.
+Sin Docker: SQL Server en `1433`, `dotnet run --project src/Invoice.Api` y `cd frontend && npm install && npm run dev`.
 
 ## Railway
 
-SQL + API. Variables y orden: [railway/README.md](railway/README.md).
+SQL + API + dashboard. Variables y orden: [railway/README.md](railway/README.md).
 
-Swagger público: dominio del servicio `api` + `/swagger`.
+| Qué | Dónde |
+|-----|--------|
+| Swagger | dominio del servicio `api` + `/swagger` |
+| Dashboard | dominio del servicio `web` |

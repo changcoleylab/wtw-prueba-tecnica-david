@@ -37,9 +37,24 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__InvoiceDb: Server=sqlserver,1433;Database=InvoiceHub;User Id=sa;Password=${MSSQL_SA_PASSWORD:-InvoiceHub_Sql!2026};TrustServerCertificate=True;Encrypt=False
+      Cors__Origins__0: http://localhost:5173
     depends_on:
       db-init:
         condition: service_completed_successfully
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+      args:
+        VITE_API_URL: http://localhost:8080
+        VITE_PUBLIC_API_URL: http://localhost:8080
+    environment:
+      API_UPSTREAM: http://api:8080
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
 
 volumes:
   sqlserver-data:
