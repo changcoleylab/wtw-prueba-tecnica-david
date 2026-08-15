@@ -15,7 +15,12 @@ API REST de facturas: **ASP.NET Core 8 + SQL Server + stored procedures (sin Ent
 | Acceso | JWT Bearer |
 | Swagger | `/swagger` |
 
-Otras partes del enunciado: [PROMPTS.md](PROMPTS.md) (optimización de prompt).
+Otras partes del enunciado:
+
+| Parte | Documento |
+|-------|-----------|
+| 2. Optimización de prompt | [PROMPTS.md](PROMPTS.md) |
+| 3. Pruebas volumétricas (diseño, sin implementar) | [VOLUMETRICAS.md](VOLUMETRICAS.md) |
 
 ## Local
 
