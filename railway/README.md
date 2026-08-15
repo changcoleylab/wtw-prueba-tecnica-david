@@ -1,6 +1,6 @@
 # Deploy en Railway
 
-Un repo → dos servicios por ahora (SQL + API). El front se añade después.
+Un repo → SQL Server + API.
 
 ```
 sqlserver  Dockerfile.sqlserver   red privada :1433   volume /var/opt/mssql
@@ -15,9 +15,9 @@ Config-as-code: `railway/sql.toml`, `railway/api.toml`.
 
 `.env.example` es para localhost. Aquí van en **Variables** de cada servicio.
 
-### Servicio SQL
+### Servicio `sqlserver`
 
-Nombre sugerido: `sqlserver` (el DNS queda `sqlserver.railway.internal`).
+El DNS queda `sqlserver.railway.internal`.
 
 | Variable | Valor |
 |----------|--------|
@@ -43,10 +43,6 @@ Volume: `/var/opt/mssql`.
 ```
 Server=${{sqlserver.RAILWAY_PRIVATE_DOMAIN}},1433;Database=InvoiceHub;User Id=sa;Password=${{sqlserver.MSSQL_SA_PASSWORD}};TrustServerCertificate=True;Encrypt=False
 ```
-
-Si el servicio SQL se llama `test`, usa `${{test.RAILWAY_PRIVATE_DOMAIN}}`.
-
-`Cors__Origins__0` se pone cuando exista el front (URL `https://…` sin `/` final). Swagger no lo necesita.
 
 ## Orden
 
