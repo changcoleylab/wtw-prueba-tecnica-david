@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Invoice.Application\Invoice.Application.csproj" />
+    <ProjectReference Include="..\Invoice.Domain\Invoice.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\database\00-create-database.sql" LogicalName="Invoice.Infrastructure.Schema.00-create-database.sql" />
+    <EmbeddedResource Include="..\..\database\01-tables.sql" LogicalName="Invoice.Infrastructure.Schema.01-tables.sql" />
+    <EmbeddedResource Include="..\..\database\02-indexes.sql" LogicalName="Invoice.Infrastructure.Schema.02-indexes.sql" />
+    <EmbeddedResource Include="..\..\database\03-stored-procedures.sql" LogicalName="Invoice.Infrastructure.Schema.03-stored-procedures.sql" />
+    <EmbeddedResource Include="..\..\database\04-seed.sql" LogicalName="Invoice.Infrastructure.Schema.04-seed.sql" />
+    <EmbeddedResource Include="..\..\database\05-invoice-lines.sql" LogicalName="Invoice.Infrastructure.Schema.05-invoice-lines.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

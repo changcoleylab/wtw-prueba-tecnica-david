@@ -1,0 +1,45 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-InvoiceHub_Sql!2026}
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"InvoiceHub_Sql!2026\" -C -Q \"SELECT 1\" -b || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 20s
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-InvoiceHub_Sql!2026}
+      MSSQL_HOST: sqlserver
+    volumes:
+      - ./database:/scripts:ro
+    entrypoint: ["bash", "-c", "sed 's/\\r$//' /scripts/init.sh | bash"]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__InvoiceDb: Server=sqlserver,1433;Database=InvoiceHub;User Id=sa;Password=${MSSQL_SA_PASSWORD:-InvoiceHub_Sql!2026};TrustServerCertificate=True;Encrypt=False
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+
+volumes:
+  sqlserver-data:

@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY Directory.Build.props ./
+COPY InvoicePlatform.sln ./
+COPY src/Invoice.Domain/Invoice.Domain.csproj src/Invoice.Domain/
+COPY src/Invoice.Application/Invoice.Application.csproj src/Invoice.Application/
+COPY src/Invoice.Infrastructure/Invoice.Infrastructure.csproj src/Invoice.Infrastructure/
+COPY src/Invoice.Api/Invoice.Api.csproj src/Invoice.Api/
+RUN dotnet restore src/Invoice.Api/Invoice.Api.csproj
+
+COPY src/ src/
+COPY database/ database/
+RUN dotnet publish src/Invoice.Api/Invoice.Api.csproj -c Release -o /app --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app .
+COPY docker/api-entrypoint.sh /entrypoint.sh
+EXPOSE 8080
+ENTRYPOINT ["sh", "/entrypoint.sh"]

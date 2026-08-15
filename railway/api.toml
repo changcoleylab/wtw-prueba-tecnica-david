@@ -1,0 +1,24 @@
+# Railway — servicio API
+# Root Directory = /
+# Config-as-code = railway/api.toml
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.api"
+watchPatterns = [
+  "Dockerfile.api",
+  "docker/api-entrypoint.sh",
+  "database/**",
+  "Directory.Build.props",
+  "InvoicePlatform.sln",
+  "src/**",
+  "railway/api.toml",
+]
+
+[deploy]
+# Liveness only: SQL init en sqlserver puede tardar >60s en el primer deploy.
+# Readiness con SQL: GET /health/ready o /health (monitoring).
+healthcheckPath = "/health/live"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5

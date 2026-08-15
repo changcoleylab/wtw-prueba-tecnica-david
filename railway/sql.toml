@@ -1,0 +1,18 @@
+# Railway — servicio SQL Server
+# Root Directory = /
+# Config-as-code = railway/sql.toml
+#
+# Imagen oficial Microsoft. Asigna ≥ 2 GB RAM (recomendado 4 GB).
+# Volume: /var/opt/mssql
+# No generar dominio público.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.sqlserver"
+watchPatterns = [
+  "Dockerfile.sqlserver",
+  "database/sqlserver-limit-cpus.sh",
+]
+
+[deploy]
+restartPolicyType = "ALWAYS"
